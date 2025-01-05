@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debounce</title>
+    <style>
+  #container{
+    text-align: center;
+  }
+
+  input{
+    display: flex;
+   margin: 20px auto;
+
+} 
+
+
+body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .heading {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .content {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+    <div id="container">  DEBOUNCE CONCEPT</div>
+      <input type="text"/>
+       
+   
+      <div>
+        <p class="heading">Debouncing in JavaScript</p>
+        <div class="content">
+            <p>Debouncing in JavaScript is a programming technique used to limit the number of times a function is executed over time, especially in scenarios where an event (like user input, scrolling, or resizing) triggers repeated function calls in a short amount of time. The primary goal of debouncing is to make sure that the function is called only once after a certain amount of time has passed since the last event.</p>
+
+            <p><strong>Scenario Without Debouncing:</strong></p>
+            <p>Imagine you have an input field where a user types something. Each keystroke could trigger an event, like an API call or some expensive computation, and if the user types quickly, it may result in many unnecessary calls (one per keystroke). This can be inefficient and degrade performance.</p>
+
+            <p><strong>What Does Debouncing Do?</strong></p>
+            <p>Debouncing ensures that the function will only be executed once after a certain period of inactivity. So, when the user stops typing for a predetermined time (e.g., 500ms), the function is triggered. If the user types again before the time has elapsed, the previous function call is canceled, and the timer restarts.</p>
+
+            <p><strong>Key Concepts of Debouncing:</strong></p>
+            <ul>
+                <li><strong>Delay:</strong> This is the amount of time to wait after the last event before triggering the function.</li>
+                <li><strong>Cancel Previous Call:</strong> If a new event is triggered before the delay period finishes, the previous function call is canceled (if applicable).</li>
+                <li><strong>Execute Once:</strong> The function is executed only after the event has stopped occurring for the specified delay time.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+<script>
+    const input = document.getElementsByTagName('input')[0];
+
+   
+    function inputHandler(){
+        const paragraph = document.createElement("p");
+
+// Create the text node that will go inside the <p> element
+const text = document.createTextNode("This is a dynamically created paragraph.");
+
+// Append the text node to the <p> element
+paragraph.appendChild(text);
+
+// Append the <p> element to the container div in the DOM
+document.getElementById("container").appendChild(paragraph);
+        console.log(`fetch users data......`);
+        
+    }
+
+    input.addEventListener('input',debounceInput(inputHandler , 3000));
+
+    function debounceInput(fn , delay){
+        let timer
+        return function(){
+            if(timer) clearTimeout(timer)
+              timer = setTimeout(() => {
+                      fn()
+              },delay)
+        }
+    }
+
+    
+</script>
+
+
+</html>
