@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Throttle Concept Example</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 2000px; /* To create a scrollable page */
+      background-color: #f0f0f0;
+    }
+    #throttledMessage {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .highlight {
+      background-color: #f0f8ff;
+      padding: 10px;
+      border-left: 4px solid #3498db;
+    }
+  </style>
+</head>
+<body>
+
+    <h1>Throttle: Definition and Use Cases</h1>
+  <h2>What is Throttling?</h2>
+  <p>
+    <strong>Throttle</strong> is a technique used in programming to limit the frequency at which a function is executed.
+    It ensures that a function is only invoked at most once during a specified time interval, regardless of how many times the event is triggered.
+  </p>
+  <div class="highlight">
+    Example: Imagine you're scrolling through a page, and a function is executed every time you scroll.
+    Using throttle, you can ensure that the function is only called once every 100 milliseconds, reducing the load on the browser.
+  </div>
+
+  <h2>Use Cases</h2>
+  <ul>
+    <li>
+      <strong>Scroll Events:</strong> Optimize actions like animations or data loading that occur during scrolling.
+    </li>
+    <li>
+      <strong>Resize Events:</strong> Reduce the frequency of layout recalculations triggered by window resize.
+    </li>
+    <li>
+      <strong>Button Clicks:</strong> Prevent rapid multiple submissions in forms or API calls when a button is clicked.
+    </li>
+    <li>
+      <strong>Network Requests:</strong> Control the rate of API requests made during user interactions.
+    </li>
+  </ul>
+
+  <h1>Throttle Concept: Scroll Event</h1>
+  <p>Scroll the page to see the throttled message appear every 1 second.</p>
+  
+  <div id="throttledMessage">
+    Scroll Event Throttled
+  </div>
+
+  <script>
+    // Throttle function to limit execution rate
+    function throttle(func, delay) {
+      let lastExecutionTime = 0;
+
+      return function (...args) {
+        const now = Date.now();
+
+        if (now - lastExecutionTime >= delay) {
+          lastExecutionTime = now;
+          func.apply(this, args);
+        }
+      };
+    }
+
+    // Function to handle scroll event
+    function onScroll() {
+      const message = document.getElementById('throttledMessage');
+      message.textContent = `Scroll event triggered at: ${new Date().toLocaleTimeString()}`;
+    }
+
+    // Attach throttled scroll event
+    window.addEventListener('scroll', throttle(onScroll, 1000)); // 1000ms (1 second) delay
+  </script>
+</body>
+</html>
